@@ -9,7 +9,8 @@
       "@assets/*": ["assets/*"],
       "@colors/*": ["colors/*"],
       "@navigators/*": ["navigators/*"],
-      "@types/*": ["types/*"]
+      "@types/*": ["types/*"],
+      "@dummy/*": ["dummy/*"]
     }
   }
 }
