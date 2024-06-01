@@ -1,9 +1,9 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from '../screens/Home';
-import Festa from '../screens/Festa';
-import Place from '../screens/Place';
-import SvgIcon from '../assets/SvgIcon';
-import {colors} from '../colors';
+import Home from '@/screens/Home';
+import Festa from '@/screens/Festa';
+import Place from '@/screens/Place';
+import SvgIcon from '@/assets/SvgIcon';
+import {colors} from '@/colors';
 
 const BottomTab = createBottomTabNavigator();
 
