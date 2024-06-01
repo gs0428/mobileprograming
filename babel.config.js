@@ -24,6 +24,7 @@ module.exports = {
           '@assets': './src/assets',
           '@colors': './src/colors',
           '@navigators': './src/navigators',
+          '@types': './src/types',
         },
       },
     ],
