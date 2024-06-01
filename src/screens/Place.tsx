@@ -1,6 +1,6 @@
-import {Text} from 'react-native';
-import Header from '../components/common/Header';
+import Screen from '@components/Screen';
+import {placeDummies} from '@/dummy';
 
 export default function Place() {
-  return <Header title="명소" />;
+  return <Screen title="명소" items={placeDummies} />;
 }

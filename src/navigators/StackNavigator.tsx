@@ -1,7 +1,9 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomNavigator from './BottomNavigator';
+import WebSite from '@screens/WebSite';
+import {StackNavigationProps} from '@/types/navigator';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<StackNavigationProps>();
 
 export default function StackNavigator() {
   return (
@@ -9,6 +11,11 @@ export default function StackNavigator() {
       <Stack.Screen
         name="BottomNavigator"
         component={BottomNavigator}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="WebSite"
+        component={WebSite}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

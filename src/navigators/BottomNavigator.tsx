@@ -11,7 +11,7 @@ export default function BottomNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="홈"
-      screenOptions={{tabBarStyle: {borderTopColor: colors.grey100}}}>
+      screenOptions={{tabBarStyle: {borderTopColor: colors.grey200}}}>
       <BottomTab.Screen
         name="축제"
         component={Festa}
@@ -19,7 +19,7 @@ export default function BottomNavigator() {
           tabBarIcon: ({focused}) =>
             focused ? <SvgIcon.FestaFilled /> : <SvgIcon.Festa />,
           tabBarActiveTintColor: colors.black,
-          tabBarInactiveTintColor: colors.grey200,
+          tabBarInactiveTintColor: colors.grey300,
           headerShown: false,
         }}
       />
@@ -30,7 +30,7 @@ export default function BottomNavigator() {
           tabBarIcon: ({focused}) =>
             focused ? <SvgIcon.HomeFilled /> : <SvgIcon.Home />,
           tabBarActiveTintColor: colors.black,
-          tabBarInactiveTintColor: colors.grey200,
+          tabBarInactiveTintColor: colors.grey300,
           headerShown: false,
         }}
       />
@@ -41,7 +41,7 @@ export default function BottomNavigator() {
           tabBarIcon: ({focused}) =>
             focused ? <SvgIcon.PlaceFilled /> : <SvgIcon.Place />,
           tabBarActiveTintColor: colors.black,
-          tabBarInactiveTintColor: colors.grey200,
+          tabBarInactiveTintColor: colors.grey300,
           headerShown: false,
         }}
       />
