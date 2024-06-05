@@ -4,14 +4,15 @@
     "baseUrl": "./src",
     "paths": {
       "@*": ["./*"],
-      "@components/*": ["components/*"],
-      "@screens/*": ["screens/*"],
-      "@assets/*": ["assets/*"],
-      "@colors/*": ["colors/*"],
-      "@navigators/*": ["navigators/*"],
-      "@types/*": ["types/*"],
-      "@dummy/*": ["dummy/*"],
-      "@utils/*": ["utils/*"]
+      "@/components/*": ["components/*"],
+      "@/screens/*": ["screens/*"],
+      "@/assets/*": ["assets/*"],
+      "@/colors/*": ["colors/*"],
+      "@/navigators/*": ["navigators/*"],
+      "@/types/*": ["types/*"],
+      "@/dummy/*": ["dummy/*"],
+      "@/utils/*": ["utils/*"],
+      "@/hooks/*": ["hooks/*"]
     }
   }
 }
