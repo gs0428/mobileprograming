@@ -75,3 +75,4 @@ yarn-error.log
 dummy
 .env
 react-native-config.d.ts
+google-services.json
