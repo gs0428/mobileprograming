@@ -10,7 +10,8 @@
       "@colors/*": ["colors/*"],
       "@navigators/*": ["navigators/*"],
       "@types/*": ["types/*"],
-      "@dummy/*": ["dummy/*"]
+      "@dummy/*": ["dummy/*"],
+      "@utils/*": ["utils/*"]
     }
   }
 }

@@ -26,6 +26,7 @@ module.exports = {
           '@navigators': './src/navigators',
           '@types': './src/types',
           '@dummy': './src/dummy',
+          '@utils': './src/utils',
         },
       },
     ],
