@@ -1,7 +1,3 @@
-import SvgIcon from '@assets/SvgIcon';
-import {colors} from '@colors';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {CardProps} from '@/types/card';
 import {
   View,
   Image,
@@ -10,10 +6,11 @@ import {
   StyleSheet,
   ImageProps,
 } from 'react-native';
-import {
-  BottomTabNavigationProps,
-  StackNavigationProps,
-} from '@/types/navigator';
+
+import useNavigator from '@hooks/useNavigator';
+import {CardProps} from '@/types/card';
+import SvgIcon from '@assets/SvgIcon';
+import {colors} from '@colors';
 
 export default function Card({
   name,
@@ -22,9 +19,12 @@ export default function Card({
   siteUrl,
   location,
 }: CardProps) {
-  const stackNavigation = useNavigation<NavigationProp<StackNavigationProps>>();
-  const tabNavigation =
-    useNavigation<NavigationProp<BottomTabNavigationProps>>();
+  const {stackNavigation, tabNavigation} = useNavigator();
+
+  const goToWebView = () =>
+    stackNavigation.navigate('WebSite', {uri: siteUrl!});
+
+  const goToHome = () => tabNavigation.navigate('홈', {location, name});
 
   return (
     <View style={styles.container}>
@@ -34,18 +34,12 @@ export default function Card({
       </Text>
       <View style={styles.buttonWrap}>
         {festaScreen && (
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              stackNavigation.navigate('WebSite', {uri: siteUrl!})
-            }>
+          <TouchableOpacity style={styles.button} onPress={goToWebView}>
             <SvgIcon.Web />
             <Text>사이트 보기</Text>
           </TouchableOpacity>
         )}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => tabNavigation.navigate('홈')}>
+        <TouchableOpacity style={styles.button} onPress={goToHome}>
           <SvgIcon.Map />
           <Text>위치 보기</Text>
         </TouchableOpacity>
