@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import Header from '@components/Header';
 import ViewContainer from '@components/ViewContainer';
 import ScrollViewContainer from '@components/ScrollViewContainer';
@@ -10,12 +10,16 @@ import SeasonTab, {Season} from './SeasonTab';
 interface ScreenProps {
   title: string;
   items: CardProps[];
+  festaScreen?: boolean;
 }
 
-export default function Screen({title, items}: ScreenProps) {
+export default function Screen({
+  title,
+  items,
+  festaScreen = false,
+}: ScreenProps) {
   const [selectedSeason, setSelectedSeason] = useState<Season>('봄');
 
-  const festaScreen = items.findIndex(item => item.festaScreen === true) !== -1;
   const itemsByFestaScreen = festaScreen
     ? items.filter(item => item.season === selectedSeason)
     : items;
@@ -34,9 +38,13 @@ export default function Screen({title, items}: ScreenProps) {
       <ViewContainer>
         <ScrollViewContainer>
           <View style={styles.container}>
-            {itemsByFestaScreen.map(item => (
-              <Card {...item} key={item.name} />
-            ))}
+            {festaScreen && itemsByFestaScreen.length === 0 && (
+              <Text style={styles.text}>아직 예정된 축제가 없어요</Text>
+            )}
+            {itemsByFestaScreen.length > 0 &&
+              itemsByFestaScreen.map(item => (
+                <Card {...item} festaScreen={festaScreen} key={item.name} />
+              ))}
           </View>
         </ScrollViewContainer>
       </ViewContainer>
@@ -50,5 +58,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 24,
     justifyContent: 'space-between',
+  },
+  text: {
+    textAlign: 'center',
+    width: '100%',
   },
 });

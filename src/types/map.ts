@@ -1,6 +1,6 @@
 export interface MapProps {
-  latitude: number;
-  longitude: number;
+  _latitude: number;
+  _longitude: number;
 }
 
 export interface CameraProps extends MapProps {

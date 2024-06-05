@@ -1,6 +1,16 @@
 import Screen from '@components/Screen';
-import {festaDummies} from '@dummy';
+import {CardProps} from '@/types/card';
+import {useEffect, useState} from 'react';
+import {getFestaItems} from '@utils/firebase';
 
 export default function Festa() {
-  return <Screen title="축제" items={festaDummies} />;
+  const [items, setItems] = useState<CardProps[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      setItems(await getFestaItems());
+    })();
+  }, []);
+
+  return <Screen title="축제" items={items || []} festaScreen />;
 }

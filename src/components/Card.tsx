@@ -28,7 +28,7 @@ export default function Card({
 
   return (
     <View style={styles.container}>
-      <Image source={image as ImageProps} style={styles.image} />
+      <Image source={{uri: image}} style={styles.image} />
       <Text style={styles.name} numberOfLines={1}>
         {name}
       </Text>

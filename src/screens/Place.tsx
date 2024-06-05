@@ -1,6 +1,15 @@
 import Screen from '@components/Screen';
-import {placeDummies} from '@/dummy';
+import {CardProps} from '@/types/card';
+import {getPlaceItems} from '@utils/firebase';
+import {useState, useEffect} from 'react';
 
 export default function Place() {
-  return <Screen title="명소" items={placeDummies} />;
+  const [items, setItems] = useState<CardProps[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      setItems(await getPlaceItems());
+    })();
+  }, []);
+  return <Screen title="명소" items={items} />;
 }
