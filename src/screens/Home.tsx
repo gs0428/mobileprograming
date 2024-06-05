@@ -1,44 +1,51 @@
-import {NaverMapView} from '@mj-studio/react-native-naver-map';
-import {useEffect} from 'react';
-import {Platform, Text} from 'react-native';
 import {
-  request,
-  PERMISSIONS,
-  requestLocationAccuracy,
-  requestMultiple,
-} from 'react-native-permissions';
+  NaverMapMarkerOverlay,
+  NaverMapView,
+} from '@mj-studio/react-native-naver-map';
+import {requestPermissions} from '@/utils/requestPermissions';
+import {useEffect, useState} from 'react';
+import {RouteProp} from '@react-navigation/native';
+import {BottomTabNavigationProps} from '@/types/navigator';
+import {CameraProps} from '@/types/map';
 
-export default function Home() {
-  // useEffect는 단순히 컴포넌트가 mount될 때 호출해주기 위해서 사용되었습니다.
+interface HomeProps {
+  route: RouteProp<BottomTabNavigationProps, '홈'>;
+}
+
+const initialLocation = {
+  latitude: 37.340191,
+  longitude: 126.733529,
+  zoom: 15,
+};
+
+export default function Home({route: {params}}: HomeProps) {
+  const [location, setLocation] = useState<CameraProps>(initialLocation);
+
+  useEffect(requestPermissions, []);
   useEffect(() => {
-    if (Platform.OS === 'ios') {
-      request(PERMISSIONS.IOS.LOCATION_ALWAYS).then(status => {
-        console.log(`Location request status: ${status}`);
-        if (status === 'granted') {
-          requestLocationAccuracy({
-            purposeKey: 'common-purpose', // replace your purposeKey of Info.plist
-          })
-            .then(accuracy => {
-              console.log(`Location accuracy is: ${accuracy}`);
-            })
-            .catch(e => {
-              console.error(`Location accuracy request has been failed: ${e}`);
-            });
-        }
-      });
-    }
-    if (Platform.OS === 'android') {
-      requestMultiple([
-        PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-        PERMISSIONS.ANDROID.ACCESS_BACKGROUND_LOCATION,
-      ])
-        .then(status => {
-          console.log(`Location request status: ${status}`);
-        })
-        .catch(e => {
-          console.error(`Location request has been failed: ${e}`);
-        });
-    }
-  }, []);
-  return <NaverMapView style={{flex: 1}} />;
+    params && setLocation({...params?.location, zoom: 15});
+  }, [params]);
+  return (
+    <NaverMapView isExtentBoundedInKorea camera={location} style={{flex: 1}}>
+      <NaverMapMarkerOverlay
+        latitude={initialLocation.latitude}
+        longitude={initialLocation.longitude}
+        anchor={{x: 0.5, y: 0.5}}
+        image={require('../assets/images/marker.png')}
+        width={21}
+        height={21}
+      />
+      {params && (
+        <NaverMapMarkerOverlay
+          latitude={params?.location.latitude}
+          longitude={params?.location.longitude}
+          anchor={{x: 0.5, y: 1}}
+          caption={{text: params?.name}}
+          image={{symbol: 'green'}}
+          width={20}
+          height={32}
+        />
+      )}
+    </NaverMapView>
+  );
 }
