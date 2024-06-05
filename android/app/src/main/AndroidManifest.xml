@@ -24,6 +24,6 @@
       </activity>
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="CLIENT_ID" />
+            android:value="@string/NAVER_MAPS_API_KEY" />
     </application>
 </manifest>
