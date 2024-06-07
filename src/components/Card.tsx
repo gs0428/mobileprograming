@@ -1,16 +1,11 @@
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ImageProps,
-} from 'react-native';
+import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 import useNavigator from '@hooks/useNavigator';
 import {CardProps} from '@/types/card';
 import SvgIcon from '@assets/SvgIcon';
 import {colors} from '@colors';
+import {addDays} from 'date-fns';
+import {dateStatus} from '@utils/date';
 
 export default function Card({
   name,
@@ -18,9 +13,11 @@ export default function Card({
   image,
   siteUrl,
   location,
+  startDate,
+  endDate,
 }: CardProps) {
   const {stackNavigation, tabNavigation} = useNavigator();
-
+  const status = dateStatus(startDate?.seconds, endDate?.seconds);
   const goToWebView = () =>
     stackNavigation.navigate('WebSite', {uri: siteUrl!});
 
@@ -28,7 +25,10 @@ export default function Card({
 
   return (
     <View style={styles.container}>
-      <Image source={{uri: image}} style={styles.image} />
+      <View>
+        <Image source={{uri: image}} style={styles.image} />
+        {festaScreen && <Text style={styles.text}>{status}</Text>}
+      </View>
       <Text style={styles.name} numberOfLines={1}>
         {name}
       </Text>
@@ -53,6 +53,15 @@ const styles = StyleSheet.create({
     maxWidth: 130,
   },
   image: {borderRadius: 4, width: 130, height: 130},
+  text: {
+    position: 'absolute',
+    margin: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    backgroundColor: colors.black,
+    color: colors.white,
+  },
   name: {
     color: colors.black,
     textAlign: 'center',

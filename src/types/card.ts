@@ -7,6 +7,8 @@ export interface CardProps {
   location: MapProps;
   // 축제 화면에 쓰이는 props
   festaScreen?: boolean;
+  startDate?: {seconds: number};
+  endDate?: {seconds: number};
   season?: Season;
   siteUrl?: string;
 }
