@@ -11,7 +11,7 @@ import {getPlaceItems} from '@utils/firebase';
 import {CardProps} from '@/types/card';
 
 interface HomeProps {
-  route: RouteProp<BottomTabNavigationProps, '홈'>;
+  route?: RouteProp<BottomTabNavigationProps, '홈'>;
 }
 
 const initialLocation = {
@@ -20,7 +20,7 @@ const initialLocation = {
   zoom: 15,
 };
 
-export default function Home({route: {params}}: HomeProps) {
+export default function Home({route}: HomeProps) {
   const [location, setLocation] = useState<CameraProps>(initialLocation);
   const [items, setItems] = useState<CardProps[]>([]);
 
@@ -37,8 +37,8 @@ export default function Home({route: {params}}: HomeProps) {
 
   useEffect(requestPermissions, []);
   useEffect(() => {
-    params && setLocation({...params?.location, zoom: 15});
-  }, [params]);
+    route?.params && setLocation({...route?.params.location, zoom: 15});
+  }, [route?.params]);
 
   return (
     <NaverMapView isExtentBoundedInKorea camera={camera} style={{flex: 1}}>
