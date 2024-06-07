@@ -7,6 +7,8 @@ import {useEffect, useState} from 'react';
 import {RouteProp} from '@react-navigation/native';
 import {BottomTabNavigationProps} from '@/types/navigator';
 import {CameraProps} from '@/types/map';
+import {getPlaceItems} from '@utils/firebase';
+import {CardProps} from '@/types/card';
 
 interface HomeProps {
   route: RouteProp<BottomTabNavigationProps, '홈'>;
@@ -20,6 +22,13 @@ const initialLocation = {
 
 export default function Home({route: {params}}: HomeProps) {
   const [location, setLocation] = useState<CameraProps>(initialLocation);
+  const [items, setItems] = useState<CardProps[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      setItems(await getPlaceItems());
+    })();
+  }, []);
   const camera = {
     latitude: location._latitude,
     longitude: location._longitude,
@@ -41,17 +50,18 @@ export default function Home({route: {params}}: HomeProps) {
         width={21}
         height={21}
       />
-      {params && (
+      {items.map(item => (
         <NaverMapMarkerOverlay
-          latitude={params?.location._latitude}
-          longitude={params?.location._longitude}
+          latitude={item.location._latitude}
+          longitude={item.location._longitude}
           anchor={{x: 0.5, y: 1}}
-          caption={{text: params?.name}}
+          caption={{text: item.name}}
           image={{symbol: 'green'}}
           width={20}
           height={32}
+          key={item.name}
         />
-      )}
+      ))}
     </NaverMapView>
   );
 }
