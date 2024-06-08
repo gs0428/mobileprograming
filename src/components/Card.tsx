@@ -4,7 +4,6 @@ import useNavigator from '@hooks/useNavigator';
 import {CardProps} from '@/types/card';
 import SvgIcon from '@assets/SvgIcon';
 import {colors} from '@colors';
-import {addDays} from 'date-fns';
 import {dateStatus} from '@utils/date';
 
 export default function Card({
@@ -18,6 +17,7 @@ export default function Card({
 }: CardProps) {
   const {stackNavigation, tabNavigation} = useNavigator();
   const status = dateStatus(startDate?.seconds, endDate?.seconds);
+
   const goToWebView = () =>
     stackNavigation.navigate('WebSite', {uri: siteUrl!});
 
@@ -27,7 +27,9 @@ export default function Card({
     <View style={styles.container}>
       <View>
         <Image source={{uri: image}} style={styles.image} />
-        {festaScreen && <Text style={styles.text}>{status}</Text>}
+        {festaScreen && (
+          <Text style={[styles.text, styles[status.style]]}>{status.name}</Text>
+        )}
       </View>
       <Text style={styles.name} numberOfLines={1}>
         {name}
@@ -77,4 +79,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
+  continue: {color: colors.white, backgroundColor: colors.black},
+  end: {color: colors.black, backgroundColor: colors.grey100},
+  pending: {color: colors.pink200, backgroundColor: colors.pink100},
 });

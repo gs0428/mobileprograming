@@ -1,6 +1,9 @@
 import {addDays, differenceInDays} from 'date-fns';
 
-type DateStatus = '진행중' | '종료' | `D-${number}`;
+interface DateStatus {
+  name: '진행중' | '종료' | `D-${number}`;
+  style: 'continue' | 'end' | 'pending';
+}
 
 // 며칠 남았는지, 진행중인지, 종료인지 반환
 export const dateStatus = (
@@ -15,10 +18,17 @@ export const dateStatus = (
   const todayStartDateGap = differenceInDays(startDate, today);
   const todayEndDateGap = differenceInDays(endDate, today);
 
-  if (todayStartDateGap < 0 && todayEndDateGap < 0) return '종료';
+  if (todayStartDateGap < 0 && todayEndDateGap < 0)
+    return {name: '종료', style: 'end'};
 
   if (todayStartDateGap > 0 && todayEndDateGap > 0)
-    return `D-${todayStartDateGap}`;
+    return {
+      name: `D-${todayStartDateGap}`,
+      style: 'pending',
+    };
 
-  return '진행중';
+  return {
+    name: '진행중',
+    style: 'continue',
+  };
 };

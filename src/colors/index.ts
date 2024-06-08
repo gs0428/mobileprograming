@@ -4,4 +4,6 @@ export const colors = {
   grey200: '#B1B1B1',
   grey300: '#919191',
   white: '#ffffff',
+  pink100: '#FFEDF0',
+  pink200: '#EA2E71',
 };
