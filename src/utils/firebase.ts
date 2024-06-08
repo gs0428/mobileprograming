@@ -12,3 +12,12 @@ export const getPlaceItems = async (): Promise<CardProps[]> => {
 
   return placeItems.data()?.item;
 };
+
+export const getActivityItems = async (): Promise<CardProps[]> => {
+  const activityItems = await firestore()
+    .collection('activity')
+    .doc('list')
+    .get();
+
+  return activityItems.data()?.item;
+};
