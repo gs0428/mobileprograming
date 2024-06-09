@@ -11,5 +11,6 @@ export default function Place() {
       setItems(await getPlaceItems());
     })();
   }, []);
-  return <Screen title="명소" items={items} />;
+
+  return <Screen title="명소" items={items} placeScreen />;
 }
