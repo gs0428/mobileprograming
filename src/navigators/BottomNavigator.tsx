@@ -2,6 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '@screens/Home.tsx';
 import Festa from '@screens/Festa.tsx';
 import Place from '@screens/Place.tsx';
+import Activity from '@screens/Activity';
 import SvgIcon from '@assets/SvgIcon.tsx';
 import {colors} from '@colors';
 
@@ -12,6 +13,17 @@ export default function BottomNavigator() {
     <BottomTab.Navigator
       initialRouteName="홈"
       screenOptions={{tabBarStyle: {borderTopColor: colors.grey200}}}>
+      <BottomTab.Screen
+        name="액티비티"
+        component={Activity}
+        options={{
+          tabBarIcon: ({focused}) =>
+            focused ? <SvgIcon.ActivityFilled /> : <SvgIcon.Activity />,
+          tabBarActiveTintColor: colors.black,
+          tabBarInactiveTintColor: colors.grey300,
+          headerShown: false,
+        }}
+      />
       <BottomTab.Screen
         name="축제"
         component={Festa}
