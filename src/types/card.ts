@@ -11,4 +11,6 @@ export interface CardProps {
   endDate?: {seconds: number};
   season?: Season;
   siteUrl?: string;
+  // 명소 화면에 쓰이는 props
+  placeScreen?: boolean;
 }

@@ -5,10 +5,14 @@ import {CardProps} from '@/types/card';
 import SvgIcon from '@assets/SvgIcon';
 import {colors} from '@colors';
 import {dateStatus} from '@utils/date';
+import {useEffect, useState} from 'react';
+import {getStorageData} from '@utils/storage';
+import {useStorage} from '@hooks/useStorage';
 
 export default function Card({
   name,
   festaScreen = false,
+  placeScreen = false,
   image,
   siteUrl,
   location,
@@ -16,12 +20,38 @@ export default function Card({
   endDate,
 }: CardProps) {
   const {stackNavigation, tabNavigation} = useNavigator();
+  const [favoriteData, setFavoriteData] = useState<CardProps[]>([]);
+
+  const {addFavorite, removeFavorite} = useStorage({
+    name,
+    image,
+    location,
+    setFavoriteData,
+  });
+
+  const isFavorite = favoriteData.find(data => data.name === name);
   const status = dateStatus(startDate?.seconds, endDate?.seconds);
+
+  const favoriteState = {
+    onPress: isFavorite ? removeFavorite : addFavorite,
+    Icon: isFavorite ? (
+      <SvgIcon.FavoriteFilled fill={colors.white} size={12} />
+    ) : (
+      <SvgIcon.Favorite fill={colors.white} size={12} />
+    ),
+  };
 
   const goToWebView = () =>
     stackNavigation.navigate('WebSite', {uri: siteUrl!});
 
   const goToHome = () => tabNavigation.navigate('홈', {location, name});
+
+  useEffect(() => {
+    (async () => {
+      const data = await getStorageData('favorite');
+      setFavoriteData(JSON.parse(data!) ?? []);
+    })();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -29,6 +59,11 @@ export default function Card({
         <Image source={{uri: image}} style={styles.image} />
         {festaScreen && (
           <Text style={[styles.text, styles[status.style]]}>{status.name}</Text>
+        )}
+        {placeScreen && (
+          <TouchableOpacity onPress={favoriteState.onPress} style={styles.star}>
+            {favoriteState.Icon}
+          </TouchableOpacity>
         )}
       </View>
       <Text style={styles.name} numberOfLines={1}>
@@ -63,6 +98,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: colors.black,
     color: colors.white,
+  },
+  star: {
+    position: 'absolute',
+    padding: 6,
+    borderRadius: 12,
+    margin: 8,
+    backgroundColor: colors.black,
   },
   name: {
     color: colors.black,

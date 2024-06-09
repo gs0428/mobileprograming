@@ -11,12 +11,14 @@ interface ScreenProps {
   title: string;
   items: CardProps[];
   festaScreen?: boolean;
+  placeScreen?: boolean;
 }
 
 export default function Screen({
   title,
   items,
   festaScreen = false,
+  placeScreen = false,
 }: ScreenProps) {
   const [selectedSeason, setSelectedSeason] = useState<Season>('봄');
 
@@ -43,7 +45,12 @@ export default function Screen({
             )}
             {itemsByFestaScreen.length > 0 &&
               itemsByFestaScreen.map(item => (
-                <Card {...item} festaScreen={festaScreen} key={item.name} />
+                <Card
+                  {...item}
+                  festaScreen={festaScreen}
+                  placeScreen={placeScreen}
+                  key={item.name}
+                />
               ))}
           </View>
         </ScrollViewContainer>
